@@ -15,7 +15,7 @@ namespace Euclidean_Algorithm_COMP_201_Assignment
         }
 
 
-        static void GCDWhile(List<int> r,List<int> q, int a, int b) {
+        /*static void GCDWhile(List<int> r,List<int> q, int a, int b) {
             while (b != 0) {
                 r.Add(mod(a, b)); //add current remainder to  remainders list for use when solving
                 q.Add(a / b); //add current quotient to quotients list for use later when solving
@@ -25,7 +25,7 @@ namespace Euclidean_Algorithm_COMP_201_Assignment
             }
 
             Console.WriteLine("GCD using while loop gives: {0}", r[(r.Count) - 2]);
-        }
+        }*/
         static int GCD(ref List<int> r, ref List<int> q, int a,int b) {
 
 
@@ -65,14 +65,45 @@ namespace Euclidean_Algorithm_COMP_201_Assignment
                 Console.WriteLine("GCD is {0}", c);
             }
             else {
-                GCDWhile(r, q, a, b); //finding gcd using while loop
+                //GCDWhile(r, q, a, b); //finding gcd using while loop
 
                 c = GCD(ref r, ref q, a, b); //pass r, and q by reference to GCD, then our a and b...this function uses recursion
 
                 Console.WriteLine("\nGCD using recursion is: {0}", c);
-
-
             }
+
+            int coefficientA=1, coefficientB=1;
+
+            for (int index = 0; index < q.Count - 1; index++) //start loop at beginning of list, until elemtent before last (last element has r=0 so it is disregarded
+            {
+                if (index == 0)
+                {
+                    //do not multiply first element in quotients list with coefficientA, skip it
+                    coefficientB *= (-1) * q[index]; //multiply all quotient values in the quotient list
+                }
+                else {
+                    coefficientA *= (-1) * (q[index]); //multiply all quotient values in the quotient list, except for first quotient value
+                    coefficientB *= (-1) * q[index];
+                }
+            }
+
+            coefficientA += (q.Count-3); //Add number of equations left after removing last 2 and first equations in the list
+            if (q.Count == 3)
+            { //if we only have 1st equation then last equatio (with final gcd) then only add 1
+                coefficientB += 1;
+            }
+            else {
+                coefficientB += (-1) * (q[0] + q[q.Count - 2]); //Add first and last elements in q list, except for element with r=0
+            }
+            
+
+            Console.WriteLine(q.Count);
+            foreach (int i in q) {
+                Console.WriteLine(" "+ i);
+            }
+
+            Console.WriteLine("Solution for {0}x + {1}y = {2} is : ", a,b,c);
+            Console.WriteLine("a = {0}    and    b = {1}",coefficientA,coefficientB);
 
             Console.ReadLine();
         }
