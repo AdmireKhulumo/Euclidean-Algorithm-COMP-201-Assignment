@@ -73,12 +73,12 @@ namespace Euclidean_Algorithm_COMP_201_Assignment
 
             int coefficientA=1, coefficientB=1;
 
-            for (int index = 0; index < q.Count - 1; index++) //start loop at beginning of list, until elemtent before last (last element has r=0 so it is disregarded
+            for (int index = 0; index < q.Count - 2; index++) //start loop at beginning of list, until elemtent before last (last element has r=0 so it is disregarded)
             {
                 if (index == 0)
                 {
                     //do not multiply first element in quotients list with coefficientA, skip it
-                    coefficientB *= (-1) * q[index]; //multiply all quotient values in the quotient list
+                    coefficientB *= (-1) * q[index]; //multiply all quotient values in the quotient list, except for one with r=0
                 }
                 else {
                     coefficientA *= (-1) * (q[index]); //multiply all quotient values in the quotient list, except for first quotient value
@@ -87,6 +87,7 @@ namespace Euclidean_Algorithm_COMP_201_Assignment
             }
 
             coefficientA += (q.Count-3); //Add number of equations left after removing last 2 and first equations in the list
+
             if (q.Count == 3)
             { //if we only have 1st equation then last equatio (with final gcd) then only add 1
                 coefficientB += 1;
