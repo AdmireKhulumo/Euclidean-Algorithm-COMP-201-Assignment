@@ -1,0 +1,6 @@
+C:\Users\ADMIRE\Documents\Visual Studio 2019\Code Snippets\Visual C#\My Code Snippets\Euclidean Algorithm COMP 201 Assignment\obj\Debug\Euclidean Algorithm COMP 201 Assignment.csprojAssemblyReference.cache
+C:\Users\ADMIRE\Documents\Visual Studio 2019\Code Snippets\Visual C#\My Code Snippets\Euclidean Algorithm COMP 201 Assignment\bin\Debug\Euclidean Algorithm COMP 201 Assignment.exe.config
+C:\Users\ADMIRE\Documents\Visual Studio 2019\Code Snippets\Visual C#\My Code Snippets\Euclidean Algorithm COMP 201 Assignment\bin\Debug\Euclidean Algorithm COMP 201 Assignment.exe
+C:\Users\ADMIRE\Documents\Visual Studio 2019\Code Snippets\Visual C#\My Code Snippets\Euclidean Algorithm COMP 201 Assignment\bin\Debug\Euclidean Algorithm COMP 201 Assignment.pdb
+C:\Users\ADMIRE\Documents\Visual Studio 2019\Code Snippets\Visual C#\My Code Snippets\Euclidean Algorithm COMP 201 Assignment\obj\Debug\Euclidean Algorithm COMP 201 Assignment.exe
+C:\Users\ADMIRE\Documents\Visual Studio 2019\Code Snippets\Visual C#\My Code Snippets\Euclidean Algorithm COMP 201 Assignment\obj\Debug\Euclidean Algorithm COMP 201 Assignment.pdb
