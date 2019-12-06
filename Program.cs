@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Math; //for the floor function used
 
 namespace Euclidean_Algorithm_COMP_201_Assignment
 {
@@ -11,11 +7,11 @@ namespace Euclidean_Algorithm_COMP_201_Assignment
     {
         static int mod(int a, int b) {
          return (a-((a/b)*b)); //Eg 5mod3 = 5 - [(5/3)*3] = 5-(1*3)=2 
-            //NB conventionally you'd say Math.Floor(a/b) instead of just (a/b) but because in C# this is automatically integer divsion, output is always an integer equivallent to the FLOOR value
+            //NB conventionally you'd say System.Math.Floor(a/b) instead of just (a/b) but because in C# this is automatically integer divsion, output is always an integer equivallent to the FLOOR value
         }
 
 
-        /*static void GCDWhile(List<int> r,List<int> q, int a, int b) {
+        static void GCDWhile(List<int> r,List<int> q, int a, int b) {
             while (b != 0) {
                 r.Add(mod(a, b)); //add current remainder to  remainders list for use when solving
                 q.Add(a / b); //add current quotient to quotients list for use later when solving
@@ -25,7 +21,7 @@ namespace Euclidean_Algorithm_COMP_201_Assignment
             }
 
             Console.WriteLine("GCD using while loop gives: {0}", r[(r.Count) - 2]);
-        }*/
+        }
         static int GCD(ref List<int> r, ref List<int> q, int a,int b) {
 
 
@@ -41,6 +37,7 @@ namespace Euclidean_Algorithm_COMP_201_Assignment
       
             return r[(r.Count)-2]; //last stored r was zero, so return the r before that. -2 not -1 because C# index starts at 0 not 1
         }
+
         static void Main(string[] args)
         {
             int c;
@@ -65,7 +62,9 @@ namespace Euclidean_Algorithm_COMP_201_Assignment
                 Console.WriteLine("GCD is {0}", c);
             }
             else {
-                //GCDWhile(r, q, a, b); //finding gcd using while loop
+                GCDWhile(r, q, a, b); //finding gcd using while loop
+                r.Clear(); //to clear list and remove values entered during GCDWhile
+                q.Clear();
 
                 c = GCD(ref r, ref q, a, b); //pass r, and q by reference to GCD, then our a and b...this function uses recursion
 
@@ -102,7 +101,7 @@ namespace Euclidean_Algorithm_COMP_201_Assignment
                 Console.WriteLine(" "+ i);
             }
 
-            Console.WriteLine("Solution for {0}x + {1}y = {2} is : ", a,b,c);
+            Console.WriteLine("Solution for {0}a + {1}b = {2} is : ", a,b,c);
             Console.WriteLine("a = {0}    and    b = {1}",coefficientA,coefficientB);
 
             Console.ReadLine();
