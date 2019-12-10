@@ -50,7 +50,8 @@ namespace Euclidean_Algorithm_COMP_201_Assignment
             Console.WriteLine("Enter b for gcd(a,b): ");
             int b = Int32.Parse(Console.ReadLine());
 
-            if (b>a) { //swap a and b if inputted a<b because order is important in mod function used
+            if (b>a) {
+                //swap a and b if inputted b>a because order is important in mod function used
                 int temp = a;
                 a = b;
                 b = temp;
@@ -73,7 +74,7 @@ namespace Euclidean_Algorithm_COMP_201_Assignment
 
             int coefficientA=1, coefficientB=1;
 
-            for (int index = 0; index < q.Count - 2; index++) //start loop at beginning of list, until elemtent before last (last element has r=0 so it is disregarded)
+            /*for (int index = 0; index < q.Count - 2; index++) //start loop at beginning of list, until elemtent before last (last element has r=0 so it is disregarded)
             {
                 if (index == 0)
                 {
@@ -94,12 +95,38 @@ namespace Euclidean_Algorithm_COMP_201_Assignment
             }
             else {
                 coefficientB += (-1) * (q[0] + q[q.Count - 2]); //Add first and last elements in q list, except for element with r=0
-            }
+            }*/
             
 
-            Console.WriteLine(q.Count);
-            foreach (int i in q) {
+            Console.WriteLine(r.Count);
+            foreach (int i in r) {
                 Console.WriteLine(" "+ i);
+            }
+
+            //removing irrelevant last list row with r=0
+            r.RemoveAt(r.Count-1);
+            q.RemoveAt(r.Count-1);
+
+            //reversing r and q list so as to solve equations as if from bottom up
+            r.Reverse();
+            q.Reverse();
+
+
+            int steps = r.Count;
+
+            switch (steps) {
+                case 1:
+                    coefficientA = 1;
+                    coefficientB = -q[0];
+                    break;
+                case 2:
+                    coefficientA = -q[0];
+                    coefficientB = (q[0] * q[1]) + 1;
+                    break;
+                case 3:
+                    coefficientA = q[0] * q[1] + 1;
+                    coefficientB = -(q[0] +(q[0] * q[1] * q[2])-q[2]);
+                    break;
             }
 
             Console.WriteLine("Solution for {0}a + {1}b = {2} is : ", a,b,c);
