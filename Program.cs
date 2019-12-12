@@ -22,17 +22,19 @@ namespace Euclidean_Algorithm_COMP_201_Assignment
 
             Console.WriteLine("GCD using while loop gives: {0}", r[(r.Count) - 2]);
         }
-        static int GCD(ref List<int> r, ref List<int> q, int a,int b) {
+        static int GCD(ref List<int> r, ref List<int> q, ref List<int> aList, ref List<int> bList, int a,int b) {
 
-
+            aList.Add(a); //Add a to be used to list of a's for use later in solving linear equations
+            bList.Add(b); //Add b to be used to list of b's for use later in solving linear equations
             r.Add(mod(a, b)); //add current remainder to  remainders list for use when solving
             q.Add(a / b); //add current quotient to quotients list for use later when solving
             //a = r[r.Count - 2]; //new dividend is 1 place before latest remainder. Recall that indexing starts at 0 so 1 place before latest is total elements - 2. OR a=b
+            
             a = b; //new dividend = old divisor
             b = r[r.Count - 1]; //new divisor = latest remainder in r list
             if (b != 0) //if remainder is not 0 then continue doing EA
             {
-                GCD(ref r, ref q, a, b); //recursive call
+                GCD(ref r, ref q, ref aList, ref bList, a, b); //recursive call
             }
       
             return r[(r.Count)-2]; //last stored r was zero, so return the r before that. -2 not -1 because C# index starts at 0 not 1
@@ -43,6 +45,9 @@ namespace Euclidean_Algorithm_COMP_201_Assignment
             int c;
             List<int> r = new List<int>();
             List<int> q = new List<int>();
+            List<int> aList = new List<int>();
+            List<int> bList = new List<int>();
+
 
             //Taking in a and b for gcd(a,b)
             Console.WriteLine("Enter a for gcd(a,b): ");
@@ -67,75 +72,62 @@ namespace Euclidean_Algorithm_COMP_201_Assignment
                 r.Clear(); //to clear list and remove values entered during GCDWhile
                 q.Clear();
 
-                c = GCD(ref r, ref q, a, b); //pass r, and q by reference to GCD, then our a and b...this function uses recursion
+                c = GCD(ref r, ref q, ref aList, ref bList, a, b); //pass r, and q by reference to GCD, then our a and b...this function uses recursion
 
                 Console.WriteLine("\nGCD using recursion is: {0}", c);
             }
 
-            int coefficientA=1, coefficientB=1;
-
-            /*for (int index = 0; index < q.Count - 2; index++) //start loop at beginning of list, until elemtent before last (last element has r=0 so it is disregarded)
-            {
-                if (index == 0)
-                {
-                    //do not multiply first element in quotients list with coefficientA, skip it
-                    coefficientB *= (-1) * q[index]; //multiply all quotient values in the quotient list, except for one with r=0
-                }
-                else {
-                    coefficientA *= (-1) * (q[index]); //multiply all quotient values in the quotient list, except for first quotient value
-                    coefficientB *= (-1) * q[index];
-                }
-            }
-
-            coefficientA += (q.Count-3); //Add number of equations left after removing last 2 and first equations in the list
-
-            if (q.Count == 3)
-            { //if we only have 1st equation then last equatio (with final gcd) then only add 1
-                coefficientB += 1;
-            }
-            else {
-                coefficientB += (-1) * (q[0] + q[q.Count - 2]); //Add first and last elements in q list, except for element with r=0
-            }*/
-            
-
-            Console.WriteLine(r.Count);
-            foreach (int i in r) {
-                Console.WriteLine(" "+ i);
-            }
-
             //removing irrelevant last list row with r=0
             r.RemoveAt(r.Count-1);
-            q.RemoveAt(r.Count-1);
+            q.RemoveAt(q.Count-1);
+            aList.RemoveAt(aList.Count - 1);
+            bList.RemoveAt(bList.Count - 1);
 
-            //reversing r and q list so as to solve equations as if from bottom up
+            //reversing r, q, a and b lists so as to solve equations as if from bottom up
             r.Reverse();
             q.Reverse();
+            aList.Reverse();
+            bList.Reverse();
 
-
-            int steps = r.Count;
-
-            switch (steps) {
-                case 1:
-                    coefficientA = 1;
-                    coefficientB = -q[0];
-                    break;
-                case 2:
-                    coefficientA = -q[0];
-                    coefficientB = (q[0] * q[1]) + 1;
-                    break;
-                case 3:
-                    coefficientA = q[0] * q[1] + 1;
-                    coefficientB = -(q[0] +(q[0] * q[1] * q[2])-q[2]);
-                    break;
+            Console.WriteLine("relevant steps are: {0}", r.Count);
+            foreach (int i in r)
+            {
+                Console.WriteLine(" " + i);
             }
 
-            Console.WriteLine("Solution for {0}a + {1}b = {2} is : ", a,b,c);
-            Console.WriteLine("a = {0}    and    b = {1}",coefficientA,coefficientB);
+
+            int steps = q.Count;
+
+            int coefficientA = 1;
+            int coefficientB = -q[0];
+
+            if (steps >= 2)
+            {
+                coefficientA = -q[0];
+                coefficientB = (q[0] * q[1]) + 1;
+
+                if (steps >= 3)
+                {
+                    for (int count = 2; count <= steps-1; count++)
+                    {
+                        coefficientA = coefficientB; //from sequence observed that when going down the equations, coefficient of a is equal to the previous equation's coefficient of b
+                        coefficientB = (c - (coefficientA * aList[count])) / (bList[count]); //basic arithmatic: y = (c - ax) / b
+                    }
+                }
+
+            }
+
+            Console.WriteLine("Solution for ax + by = gcd(a,b)");
+            Console.WriteLine("Equation: {0}x + {1}y = {2} is : ", a,b,c);
+            Console.WriteLine("x = {0}    and    y = {1}",coefficientA,coefficientB);
 
             Console.ReadLine();
         }
     }
 }
+
+
+//DOCUMENTATION
 
 //Appedix A - for use in explaining GCD process Take example of gcd(55,15)
 /*1) 55/15 gives q0=3 and r0=10
